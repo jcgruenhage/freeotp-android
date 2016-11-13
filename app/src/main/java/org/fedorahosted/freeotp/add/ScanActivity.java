@@ -26,12 +26,16 @@ import org.fedorahosted.freeotp.R;
 import org.fedorahosted.freeotp.Token;
 import org.fedorahosted.freeotp.TokenPersistence;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.os.Bundle;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Surface;
@@ -40,6 +44,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.app.ActivityCompat;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -50,6 +56,8 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback {
     private final int           mCameraId;
     private Handler             mHandler;
     private Camera              mCamera;
+    private Intent              mIntent;
+    private static final int    MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
     private static class AutoFocusHandler extends Handler implements Camera.AutoFocusCallback {
         private final Camera mCamera;
@@ -135,6 +143,7 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.scan);
         mScanAsyncTask.execute();
+        mIntent = getIntent();
     }
 
     @Override
@@ -198,7 +207,14 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback {
         surfaceDestroyed(holder);
 
         try {
-            // Open the camera
+            // Request Camera permissions if necessary (Android 6+)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        MY_PERMISSIONS_REQUEST_CAMERA);
+
+                // Open the camera
             mCamera = Camera.open(mCameraId);
             mCamera.setPreviewDisplay(holder);
             mCamera.setPreviewCallback(mScanAsyncTask);
@@ -243,5 +259,17 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback {
         mCamera.setPreviewCallback(null);
         mCamera.release();
         mCamera = null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                // Restart Activity
+                finish();
+                startActivity(mIntent);
+                return;
+            }
+        }
     }
 }
