@@ -30,7 +30,7 @@ import android.widget.EditText;
 
 
 public class AddTextWatcher implements TextWatcher {
-    private final Button   mButton;
+    private final Button mButton;
     private final EditText mIssuer;
     private final EditText mLabel;
     private final EditText mSecret;

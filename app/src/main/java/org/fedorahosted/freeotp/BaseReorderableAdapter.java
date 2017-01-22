@@ -51,23 +51,23 @@ public abstract class BaseReorderableAdapter extends BaseAdapter {
                     final View srcView = ref.reference;
 
                     switch (event.getAction()) {
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        srcView.setVisibility(View.VISIBLE);
-                        dstView.setVisibility(View.INVISIBLE);
+                        case DragEvent.ACTION_DRAG_ENTERED:
+                            srcView.setVisibility(View.VISIBLE);
+                            dstView.setVisibility(View.INVISIBLE);
 
-                        move(((Integer) srcView.getTag(R.id.reorder_key)).intValue(),
-                             ((Integer) dstView.getTag(R.id.reorder_key)).intValue());
-                        ref.reference = dstView;
-                        break;
+                            move(((Integer) srcView.getTag(R.id.reorder_key)).intValue(),
+                                    ((Integer) dstView.getTag(R.id.reorder_key)).intValue());
+                            ref.reference = dstView;
+                            break;
 
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        srcView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                srcView.setVisibility(View.VISIBLE);
-                            }
-                        });
-                        break;
+                        case DragEvent.ACTION_DRAG_ENDED:
+                            srcView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    srcView.setVisibility(View.VISIBLE);
+                                }
+                            });
+                            break;
                     }
 
                     return true;

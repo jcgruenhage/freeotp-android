@@ -43,7 +43,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.app.ActivityCompat;
 
@@ -51,13 +50,13 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class ScanActivity extends Activity implements SurfaceHolder.Callback {
-    private final CameraInfo    mCameraInfo  = new CameraInfo();
+    private final CameraInfo mCameraInfo = new CameraInfo();
     private final ScanAsyncTask mScanAsyncTask;
-    private final int           mCameraId;
-    private Handler             mHandler;
-    private Camera              mCamera;
-    private Intent              mIntent;
-    private static final int    MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    private final int mCameraId;
+    private Handler mHandler;
+    private Camera mCamera;
+    private Intent mIntent;
+    private static final int PERMISSION_REQUEST_CAMERA = 1;
 
     private static class AutoFocusHandler extends Handler implements Camera.AutoFocusCallback {
         private final Camera mCamera;
@@ -168,30 +167,30 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback {
 
         int rotation = 0;
         switch (getWindowManager().getDefaultDisplay().getRotation()) {
-        case Surface.ROTATION_0:
-            rotation = 0;
-            break;
-        case Surface.ROTATION_90:
-            rotation = 90;
-            break;
-        case Surface.ROTATION_180:
-            rotation = 180;
-            break;
-        case Surface.ROTATION_270:
-            rotation = 270;
-            break;
+            case Surface.ROTATION_0:
+                rotation = 0;
+                break;
+            case Surface.ROTATION_90:
+                rotation = 90;
+                break;
+            case Surface.ROTATION_180:
+                rotation = 180;
+                break;
+            case Surface.ROTATION_270:
+                rotation = 270;
+                break;
         }
 
         int result = 0;
         switch (mCameraInfo.facing) {
-        case Camera.CameraInfo.CAMERA_FACING_FRONT:
-            result = (mCameraInfo.orientation + rotation) % 360;
-            result = (360 - result) % 360; // compensate the mirror
-            break;
+            case Camera.CameraInfo.CAMERA_FACING_FRONT:
+                result = (mCameraInfo.orientation + rotation) % 360;
+                result = (360 - result) % 360; // compensate the mirror
+                break;
 
-        case Camera.CameraInfo.CAMERA_FACING_BACK:
-            result = (mCameraInfo.orientation - rotation + 360) % 360;
-            break;
+            case Camera.CameraInfo.CAMERA_FACING_BACK:
+                result = (mCameraInfo.orientation - rotation + 360) % 360;
+                break;
         }
 
         mCamera.setDisplayOrientation(result);
@@ -212,9 +211,9 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback {
                     ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.CAMERA},
-                        MY_PERMISSIONS_REQUEST_CAMERA);
+                        PERMISSION_REQUEST_CAMERA);
 
-                // Open the camera
+            // Open the camera
             mCamera = Camera.open(mCameraId);
             mCamera.setPreviewDisplay(holder);
             mCamera.setPreviewCallback(mScanAsyncTask);
@@ -264,7 +263,7 @@ public class ScanActivity extends Activity implements SurfaceHolder.Callback {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
+            case PERMISSION_REQUEST_CAMERA: {
                 // Restart Activity
                 finish();
                 startActivity(mIntent);

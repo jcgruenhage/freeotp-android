@@ -34,14 +34,14 @@ import android.util.TypedValue;
 import android.view.View;
 
 public class ProgressCircle extends View {
-    private Paint   mPaint;
-    private RectF   mRectF;
-    private Rect    mRect;
-    private int     mProgress;
-    private int     mMax;
+    private Paint mPaint;
+    private RectF mRectF;
+    private Rect mRect;
+    private int mProgress;
+    private int mMax;
     private boolean mHollow;
-    private float   mPadding;
-    private float   mStrokeWidth;
+    private float mPadding;
+    private float mStrokeWidth;
 
     public ProgressCircle(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

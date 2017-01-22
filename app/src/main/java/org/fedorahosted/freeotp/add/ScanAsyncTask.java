@@ -41,11 +41,11 @@ import com.google.zxing.qrcode.QRCodeReader;
 public class ScanAsyncTask extends AsyncTask<Void, Void, String> implements PreviewCallback {
     private static class Data {
         public byte[] data;
-        Camera.Size   size;
+        Camera.Size size;
     }
 
     private final BlockingQueue<Data> mBlockingQueue;
-    private final Reader              mReader;
+    private final Reader mReader;
 
     public ScanAsyncTask() {
         mBlockingQueue = new LinkedBlockingQueue<Data>(5);

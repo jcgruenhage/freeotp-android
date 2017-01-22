@@ -237,17 +237,17 @@ public class Token {
         long cur = System.currentTimeMillis();
 
         switch (type) {
-        case HOTP:
-            return new TokenCode(getHOTP(counter++), cur, cur + (period * 1000));
+            case HOTP:
+                return new TokenCode(getHOTP(counter++), cur, cur + (period * 1000));
 
-        case TOTP:
-            long counter = cur / 1000 / period;
-            return new TokenCode(getHOTP(counter + 0),
-                                 (counter + 0) * period * 1000,
-                                 (counter + 1) * period * 1000,
-                   new TokenCode(getHOTP(counter + 1),
-                                 (counter + 1) * period * 1000,
-                                 (counter + 2) * period * 1000));
+            case TOTP:
+                long counter = cur / 1000 / period;
+                return new TokenCode(getHOTP(counter + 0),
+                        (counter + 0) * period * 1000,
+                        (counter + 1) * period * 1000,
+                        new TokenCode(getHOTP(counter + 1),
+                                (counter + 1) * period * 1000,
+                                (counter + 2) * period * 1000));
         }
 
         return null;
@@ -268,13 +268,13 @@ public class Token {
                 .appendQueryParameter("period", Integer.toString(period));
 
         switch (type) {
-        case HOTP:
-            builder.authority("hotp");
-            builder.appendQueryParameter("counter", Long.toString(counter + 1));
-            break;
-        case TOTP:
-            builder.authority("totp");
-            break;
+            case HOTP:
+                builder.authority("hotp");
+                builder.appendQueryParameter("counter", Long.toString(counter + 1));
+                break;
+            case TOTP:
+                builder.authority("totp");
+                break;
         }
 
         return builder.build();

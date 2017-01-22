@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
    - FreeOTP
    -
    - Authors: Nathaniel McCallum <npmccallum@redhat.com>
@@ -18,17 +17,15 @@
    - See the License for the specific language governing permissions and
    - limitations under the License.
    -->
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    >
+    android:background="@android:color/black">
+
     <SurfaceView
         android:id="@+id/surfaceview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
     <org.fedorahosted.freeotp.add.ScanWindowFrameLayout
         android:id="@+id/window"
@@ -36,6 +33,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="64dp">
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
@@ -43,8 +41,7 @@
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:src="@drawable/scan"
-            android:alpha=".6"
-            />
+            android:alpha=".6" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -52,8 +49,7 @@
             android:layout_height="32dp"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:indeterminate="true"
-            />
+            android:indeterminate="true" />
     </org.fedorahosted.freeotp.add.ScanWindowFrameLayout>
 
     <TextView
@@ -63,6 +59,5 @@
         android:layout_gravity="center"
         android:visibility="invisible"
         android:textColor="@android:color/primary_text_dark"
-        android:text="@string/error_camera_open"
-        />
+        android:text="@string/error_camera_open" />
 </FrameLayout>

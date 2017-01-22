@@ -37,11 +37,11 @@ import android.widget.ImageButton;
 import com.squareup.picasso.Picasso;
 
 public class EditActivity extends BaseActivity implements TextWatcher, View.OnClickListener {
-    private EditText           mIssuer;
-    private EditText           mLabel;
-    private ImageButton        mImage;
-    private Button             mRestore;
-    private Button             mSave;
+    private EditText mIssuer;
+    private EditText mLabel;
+    private ImageButton mImage;
+    private Button mRestore;
+    private Button mSave;
 
     private String mIssuerCurrent;
     private String mIssuerDefault;

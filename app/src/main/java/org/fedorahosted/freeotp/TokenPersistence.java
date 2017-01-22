@@ -16,13 +16,14 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 public class TokenPersistence {
-    private static final String NAME  = "tokens";
+    private static final String NAME = "tokens";
     private static final String ORDER = "tokenOrder";
     private final SharedPreferences prefs;
     private final Gson gson;
 
     private List<String> getTokenOrder() {
-        Type type = new TypeToken<List<String>>(){}.getType();
+        Type type = new TypeToken<List<String>>() {
+        }.getType();
         String str = prefs.getString(ORDER, "[]");
         List<String> order = gson.fromJson(str, type);
         return order == null ? new LinkedList<String>() : order;
